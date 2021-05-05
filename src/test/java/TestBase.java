@@ -1,27 +1,22 @@
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import application.ApplicationManager;
+import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
-import java.util.concurrent.TimeUnit;
-
 public class TestBase {
-    WebDriver wd;
+    protected static ApplicationManager app =
+            new ApplicationManager(System.getProperty("browser",BrowserType.CHROME));
 
-    @BeforeSuite
-    public void init(){
-        wd = new ChromeDriver();
-        wd.manage().window().maximize();
-        wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        wd.navigate().to("https://demoqa.com/");
-        JavascriptExecutor js = (JavascriptExecutor)wd;
-        js.executeScript("document.querySelector('footer').style.display='none';");
 
+    @BeforeSuite(alwaysRun = true)
+    public void setUp(){
+        app.init();
     }
 
-    @AfterSuite
+
+
+    @AfterSuite(alwaysRun = true)
     public void tearDown() {
-        wd.quit();
+        app.stop();
     }
 }
