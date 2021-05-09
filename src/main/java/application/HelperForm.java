@@ -104,13 +104,6 @@ public class HelperForm extends HelperBase {
     }
 
     private void selectBDay(String bDay){
-        //String bDay
-        //date will be String and i will need resplit
-        //click by textbox bday
-        //select month (for example : select and option were in project ilcarro)
-        //select year
-        //select day
-        //click(By.id("dateOfBirthInput"));
         List<String> date= Arrays.asList(bDay.split(" "));
         click(By.id("dateOfBirthInput"));
         new Select(wd.findElement(By.xpath("//select[@class='react-datepicker__month-select']"))).selectByVisibleText(date.get(1));
