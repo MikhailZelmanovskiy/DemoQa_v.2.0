@@ -6,6 +6,10 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class HelperForm extends HelperBase {
     public HelperForm(WebDriver wd) {
@@ -27,7 +31,7 @@ public class HelperForm extends HelperBase {
         type(By.id("userEmail"), form.getEmail());
         selectGender(form.getGender());
         type(By.id("userNumber"), form.getPhone());
-        typeBDay(form.getBirthday());
+        selectBDay(form.getBirthday());
         selectSubject(form.getSubject());
         selectHobbies(form.getHobbies());
         type(By.id("currentAddress"), form.getAddress());
@@ -100,10 +104,22 @@ public class HelperForm extends HelperBase {
     }
 
     private void selectBDay(String bDay){
+        //String bDay
         //date will be String and i will need resplit
         //click by textbox bday
         //select month (for example : select and option were in project ilcarro)
         //select year
         //select day
+        //click(By.id("dateOfBirthInput"));
+        List<String> date= Arrays.asList(bDay.split(" "));
+        click(By.id("dateOfBirthInput"));
+        new Select(wd.findElement(By.xpath("//select[@class='react-datepicker__month-select']"))).selectByVisibleText(date.get(1));
+        new Select(wd.findElement(By.xpath("//select[@class='react-datepicker__year-select']"))).selectByVisibleText(date.get(2));
+        List<WebElement> ar = wd.findElements(By.xpath("//div[text()='"+date.get(0)+"']"));
+        for (WebElement el:ar) {
+            if(el.getAttribute("aria-label").contains(date.get(1))){
+                el.click();
+            }
+        }
     }
 }

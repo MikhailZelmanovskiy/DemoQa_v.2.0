@@ -47,8 +47,9 @@ public class HelperBase {
         return wd.findElements(locator).size() > 0;
     }
 
-    public void hideFooter(){
+    public void hideFooter() {
         JavascriptExecutor js = (JavascriptExecutor) wd;
         js.executeScript("document.querySelector('footer').style.display='none';");
+
     }
 }
